@@ -75,11 +75,14 @@ CLOUD_STACK_LIST = {
 }
 
 
-ENTIRE_STACK_LIST=[]
+ENTIRE_STACK_LIST = []
 
-def get_entire_stack_list(stack_list:dict)->None:
-    for list in FRONT_STACK_LIST.values():
+
+def get_entire_stack_list(stack_list: dict) -> None:
+    for list in stack_list.values():
         ENTIRE_STACK_LIST.extend(list)
+
+
 get_entire_stack_list(FRONT_STACK_LIST)
 get_entire_stack_list(BACK_STACK_LIST)
 get_entire_stack_list(IOS_STACK_LIST)
@@ -90,5 +93,4 @@ get_entire_stack_list(SECURITY_STACK_LIST)
 get_entire_stack_list(CLOUD_STACK_LIST)
 
 print(len(ENTIRE_STACK_LIST))
-
-
+print(ENTIRE_STACK_LIST)
