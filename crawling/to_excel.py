@@ -33,8 +33,12 @@ def write_excel(data_list):
         count_data(data_list, e, count_total)
 
     print(count_total)
-    
-    file_name = '../data/excel/StackList.xlsx'
+
+    BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+    excel_dir = os.path.join(BASE_DIR, '..', 'data', 'excel')
+    os.makedirs(excel_dir, exist_ok=True)
+    save_path = os.path.join(excel_dir, 'StackList.xlsx')
+  
     sheet_names = ['FRONT_STACK_LIST','BACK_STACK_LIST','IOS_STACK_LIST', 'CROSS_STACK_LIST', 'ANDROID_STACK_LIST', 'GAME_STACK_LIST', 
                 'SECURITY_STACK_LIST', 'CLOUD_STACK_LIST']
     df_list = list()
@@ -44,10 +48,10 @@ def write_excel(data_list):
         df_list.append(df)
 
     total_df_list = list()
-    if Path(file_name).exists():
+    if Path(save_path).exists():
         try:
             for i in range(len(sheet_names)):
-                old_df = pd.read_excel(file_name, sheet_name=sheet_names[i], index_col=0)
+                old_df = pd.read_excel(save_path, sheet_name=sheet_names[i], index_col=0)
                 total_df_list.append(old_df.add(df_list[i], fill_value=0))
         except:
             # 시트가 엑셀 파일 안에 없을 때
@@ -56,29 +60,33 @@ def write_excel(data_list):
     else:
         total_df_list = df_list
 
-    if Path(file_name).exists():
-        with pd.ExcelWriter(file_name, engine='openpyxl', mode='a', if_sheet_exists='replace') as writer:
+    if Path(save_path).exists():
+        with pd.ExcelWriter(save_path, engine='openpyxl', mode='a', if_sheet_exists='replace') as writer:
             for sheet, df in zip(sheet_names, total_df_list):
                 df.to_excel(writer, sheet_name=sheet)
     else:
-        with pd.ExcelWriter(file_name, engine='openpyxl', mode='w') as writer:
+        with pd.ExcelWriter(save_path, engine='openpyxl', mode='w') as writer:
             for sheet, df in zip(sheet_names, total_df_list):
                 df.to_excel(writer, sheet_name=sheet)
 
 
 def write_excel2(data):
-    file_name = '../data/excel/RecruitmentNotice.xlsx'
-    sheet = 'Recruitment information'
-    if not os.path.exists(file_name):
-        os.makedirs(file_name)
-    data['text'] = ', '.join(data['text']) 
-    df = pd.DataFrame(list(data))
+    BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+    excel_dir = os.path.join(BASE_DIR, '..', 'data', 'excel')
+    
+    os.makedirs(excel_dir, exist_ok=True)
+    save_path = os.path.join(excel_dir, 'RecruitmentNotice.xlsx')
 
-    if Path(file_name).exists():
-        with pd.ExcelWriter(file_name, engine='openpyxl', mode='a', if_sheet_exists='overlay') as writer:
-            df.to_excel(file_name, sheet_name=sheet, index = False, header = False)
+
+    data['text'] = ','.join(data['text']) 
+    df = pd.DataFrame([data])
+    
+    if Path(save_path).exists():
+        old_df = pd.read_excel(save_path) 
+        total_df = pd.concat([old_df, df], ignore_index=True)
+        total_df.to_excel(save_path, index=False) 
     else:
-        df.to_excel(file_name, sheet_name=sheet, engine='openpyxl', index = False)
+        df.to_excel(save_path, index = False)
 
 data = [{
         'companyName': '(주)루티너리',
@@ -99,4 +107,5 @@ data = [{
 ]
 for d in data:
     write_excel2(d)
+    print("생성함")
         
