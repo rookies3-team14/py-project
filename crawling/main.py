@@ -1,4 +1,5 @@
 from job_planet_scraper import crawl_jobs
+from get_recruitment_text import get_jobplanet_recruitment_text
 import json
 
 if __name__ == "__main__":
@@ -9,8 +10,13 @@ if __name__ == "__main__":
         jobs = crawl_jobs(url)
         all_jobs.extend(jobs)
 
-    if all_jobs:
-        print("✅ 수집된 공고 수:", len(all_jobs))
-        print("🎯 예시 공고:", json.dumps(all_jobs[:5], ensure_ascii=False, indent=2))
-    else:
-        print("❌ 공고를 수집하지 못했습니다.")
+    for job in all_jobs:
+        data=get_jobplanet_recruitment_text(job)
+        
+    
+    
+    # if all_jobs:
+    #     print("✅ 수집된 공고 수:", len(all_jobs))
+    #     print("🎯 예시 공고:", json.dumps(all_jobs[:5], ensure_ascii=False, indent=2))
+    # else:
+    #     print("❌ 공고를 수집하지 못했습니다.")
