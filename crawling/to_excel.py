@@ -1,3 +1,4 @@
+import os
 import job_list
 import pandas as pd
 from pathlib import Path 
@@ -55,7 +56,47 @@ def write_excel(data_list):
     else:
         total_df_list = df_list
 
-    with pd.ExcelWriter(file_name, engine='openpyxl', mode='a', if_sheet_exists='replace') as writer:
-        for sheet, df in zip(sheet_names, total_df_list):
-            df.to_excel(writer, sheet_name=sheet)
-       
+    if Path(file_name).exists():
+        with pd.ExcelWriter(file_name, engine='openpyxl', mode='a', if_sheet_exists='replace') as writer:
+            for sheet, df in zip(sheet_names, total_df_list):
+                df.to_excel(writer, sheet_name=sheet)
+    else:
+        with pd.ExcelWriter(file_name, engine='openpyxl', mode='w') as writer:
+            for sheet, df in zip(sheet_names, total_df_list):
+                df.to_excel(writer, sheet_name=sheet)
+
+
+def write_excel2(data):
+    file_name = '../data/excel/RecruitmentNotice.xlsx'
+    sheet = 'Recruitment information'
+    if not os.path.exists(file_name):
+        os.makedirs(file_name)
+    data['text'] = ', '.join(data['text']) 
+    df = pd.DataFrame(list(data))
+
+    if Path(file_name).exists():
+        with pd.ExcelWriter(file_name, engine='openpyxl', mode='a', if_sheet_exists='overlay') as writer:
+            df.to_excel(file_name, sheet_name=sheet, index = False, header = False)
+    else:
+        df.to_excel(file_name, sheet_name=sheet, engine='openpyxl', index = False)
+
+data = [{
+        'companyName': '(주)루티너리',
+        'title': '[Dev] RN Developer',
+        'recruitUrl': 'https://www.jobplanet.co.kr/job/search?posting_ids%5B%5D=1283031',
+        'annual': '경력',
+        'text': ['85', 'dev', 'spotlight', 'react', 'native', 'react', 'native', 'typescript', 
+                'mobx', 'zustand', 'firebase', 'react', 'query', 'react', 'a', 'to', '70']
+},
+{
+        'companyName': '(주)테스트트',
+        'title': '[Dev] 테스트 Developer',
+        'recruitUrl': 'https://www.jobplanet.co.kr/job/search?posting_ids%5B%5D=1283031',
+        'annual': '신입입',
+        'text': ['react', 'a', 'to', '70']
+},
+
+]
+for d in data:
+    write_excel2(d)
+        
