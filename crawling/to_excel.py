@@ -92,22 +92,5 @@ def write_excel2(data):
                     engine='openpyxl', index=False)
 
 
-data = [{
-        'companyName': '(주)루티너리',
-        'title': '[Dev] RN Developer',
-        'recruitUrl': 'https://www.jobplanet.co.kr/job/search?posting_ids%5B%5D=1283031',
-        'annual': '경력',
-        'text': ['85', 'dev', 'spotlight', 'react', 'native', 'react', 'native', 'typescript',
-                 'mobx', 'zustand', 'firebase', 'react', 'query', 'react', 'a', 'to', '70']
-        },
-        {
-        'companyName': '(주)테스트트',
-        'title': '[Dev] 테스트 Developer',
-        'recruitUrl': 'https://www.jobplanet.co.kr/job/search?posting_ids%5B%5D=1283031',
-        'annual': '신입입',
-        'text': ['react', 'a', 'to', '70']
-        },
 
-        ]
-for d in data:
-    write_excel2(d)
+

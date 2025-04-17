@@ -1,6 +1,6 @@
 from job_planet_scraper import crawl_jobs
 from get_recruitment_text import get_jobplanet_recruitment_text
-from to_excel import write_excel2
+from to_excel import write_excel
 import json
 
 # if __name__ == "__main__":
@@ -24,7 +24,5 @@ import json
 # else:
 #     print("❌ 공고를 수집하지 못했습니다.")
 
-write_excel2({'companyName': '(주)디셈버앤컴퍼니', 'title': '핀트(fint) 프론트엔드(front-end) 개발자', 'recruitUrl': 'https://www.jobplanet.co.kr/job/search?posting_ids%5B%5D=1290918', 'annual': '경력', 'text': ['december', 'company', 'fint', 'it', 'togetherness', 'invest', 'together', 'build', 'together', 'grow', 'together', 'change', 'together', 'playground', 'caring', 'attitude', 'meta', 'cognition', '1', '2', '3', '4', '5', '6', 'irp', 'seo', 'crm', 'preface', 'react', 'typescript', 'next', 'js', 'react', 'query',
-             'jotai', 'emotion', 'yarn', 'berry', 'pnpm', 'turborepo', 'webpack', 'esbuild', 'swc', 'babel', 'ci', 'cd', 'gitlab', 'ci', 'cd', 'react', 'vue', 'angular', 'spa', 'html', 'css', 'git', 'asana', 'confluence', 'slack', 'figma', 'react', 'typescript', 'next', 'js', 'react', 'query', 'jotai', 'emotion', 'yarn', 'berry', 'pnpm', 'turborepo', 'webpack', 'esbuild', 'swc', 'babel', 'ci', 'cd', 'gitlab', 'ci', 'cd', 'typescript', 'ssr', 'ui', 'webpack', '1', '2', '3', '4', '5', '231', 'west']})
-write_excel2({'companyName': '(주)디셈버앤컴퍼니', 'title': '핀트(fint) 프론트엔드(front-end) 개발자', 'recruitUrl': 'https://www.jobplanet.co.kr/job/search?posting_ids%5B%5D=1290918', 'annual': '경력', 'text': ['december', 'company', 'fint', 'it', 'togetherness', 'invest', 'together', 'build', 'together', 'grow', 'together', 'change', 'together', 'playground', 'caring', 'attitude', 'meta', 'cognition', '1', '2', '3', '4', '5', '6', 'irp', 'seo', 'crm', 'preface', 'react', 'typescript', 'next', 'js', 'react', 'query',
-             'jotai', 'emotion', 'yarn', 'berry', 'pnpm', 'turborepo', 'webpack', 'esbuild', 'swc', 'babel', 'ci', 'cd', 'gitlab', 'ci', 'cd', 'react', 'vue', 'angular', 'spa', 'html', 'css', 'git', 'asana', 'confluence', 'slack', 'figma', 'react', 'typescript', 'next', 'js', 'react', 'query', 'jotai', 'emotion', 'yarn', 'berry', 'pnpm', 'turborepo', 'webpack', 'esbuild', 'swc', 'babel', 'ci', 'cd', 'gitlab', 'ci', 'cd', 'typescript', 'ssr', 'ui', 'webpack', '1', '2', '3', '4', '5', '231', 'west']})
+write_excel({'companyName': '(주)버즈빌', 'title': '[광고 운영 플랫폼팀] 프론트 엔드 개발자 (경력 3년 이상)', 'recruitUrl': 'https://www.jobplanet.co.kr/job/search?posting_ids%5B%5D=1287613', 'annual': '경력', 'text': ['b2b', 'ai', 'ai', 'ai', 'ai', 'saas', '4', 'https', 'www', 'buzzvil', 'com', 'career', 'jwcvgiva7dxl7mrbcsknf', 'https', 'www', 'youtube', 'com', 'watch', 'v', '4txlnymetis', 'https', 'www', 'buzzvil', 'com', 'x', 'ceo', 'https', 'www', 'youtube', 'com', 'watch', 'v', '3rtwwkg8cw8', 'https', 'www', 'youtube', 'com', 'watch', 'v', 'cmduwbm3kkc', 'a', 'k', 'a', 'dash', 'self', 'serve', 'self',
+            'serve', 'self', 'serve', 'self', 'serve', 'self', 'serve', 'ui', 'vue', 'js', 'vue', 'js', 'a', 'b', 'automation', 'rule', 'react', 'typescript', 'vue', 'js', 'jest', 'node', 'js', 'github', 'action', 'argocd', 'jira', 'confluence', 'slack', 'github', 'figma', 'datadog', 'grafana', 'prometheus', 'loki', 'sentry', 'react', 'vue', 'angular', 'b2b', 'llm', 'job', 'fit', 'culture', 'fit', 'ceo', '1', '1', '2', '3', '4', 'gloria', 'lee', 'buzzvil', 'com', 'self', 'serve', 'self', 'serve', 'self', 'serve', 'ui', 'ux', 'a', 'b', 'self', 'serve', 'kubernetes', 'x', '272', '2', '3', '4']})
