@@ -2,18 +2,22 @@ from job_planet_scraper import crawl_jobs
 from get_recruitment_text import get_jobplanet_recruitment_text
 from to_excel import write_excel
 import json
+from job_list import SAMPLE_LIST
 
 if __name__ == "__main__":
-    all_jobs = []
+    # all_jobs = []
 
-    for i in range(1, 36):  # 테스트용으로 2페이지만
-        url = f"https://www.jobplanet.co.kr/api/v3/job/postings?occupation_level1=&occupation_level2=11905,11907,11904,11906,11610,11911,11609&years_of_experience=&review_score=&job_type=&city=&education_level_id=&order_by=aggressive&page={i}&page_size=8"
-        jobs = crawl_jobs(url)
-        all_jobs.extend(jobs)
+    # for i in range(13, 36):  # 테스트용으로 2페이지만
+    #     li=[]
+    #     url = f"https://www.jobplanet.co.kr/api/v3/job/postings?occupation_level1=&occupation_level2=11905,11907,11904,11906,11610,11911,11609&years_of_experience=&review_score=&job_type=&city=&education_level_id=&order_by=aggressive&page={i}&page_size=8"
+    #     jobs = crawl_jobs(url)
+    #     all_jobs.extend(jobs)
+    #     li.extend(jobs)
+    #     print(li)
 
-    for job in all_jobs:
+    for job in SAMPLE_LIST:
         data = get_jobplanet_recruitment_text(job)
-        if len(data["text"]) > 0:
+        if data["text"] and len(data["text"]) > 0:
             write_excel(data)
 
 # if all_jobs:
