@@ -17,8 +17,11 @@ if __name__ == "__main__":
 
     for job in SAMPLE_LIST:
         data = get_jobplanet_recruitment_text(job)
-        if data["text"] and len(data["text"]) > 0:
+        if data and data.get("text") and len(data["text"]) > 0:
             write_excel(data)
+        else:
+            print(f"❌ 공고를 수집하지 못했습니다: {job}")
+
 
 # if all_jobs:
 #     print("✅ 수집된 공고 수:", len(all_jobs))
