@@ -138,3 +138,6 @@ CLOUD_STACK_LIST = ["aws", "gcp", "azure", "digitalocean", "oracle cloud", "nave
                     "aws lambda", "google cloud functions", "azure functions", "serverless framework",
                     "s3", "ec2", "rds", "cloud run", "cloudflare", "firebase", "azure blob storage",
                     "localstack", "terratest", "chaos monkey", "k6", "artillery"]
+
+
+
