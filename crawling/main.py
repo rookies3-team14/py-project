@@ -1,30 +1,36 @@
-from job_planet_scraper import crawl_jobs
-from get_recruitment_text import get_jobplanet_recruitment_text
-from to_excel import write_excel
-import json
-from job_list import SAMPLE_LIST
+import os
+import pandas as pd
+from openpyxl import load_workbook
+from get_recruitment_text import get_saramin_recruitment_text
 
-if __name__ == "__main__":
-    # all_jobs = []
+path = os.path.dirname(os.path.abspath(__file__))
+file_path = os.path.join(path, "../data/excel/RecruitmentNotice.xlsx")
+new_file_path = os.path.join(path, "../data/excel/stack_candidate.xlsx")
 
-    # for i in range(13, 36):  # 테스트용으로 2페이지만
-    #     li=[]
-    #     url = f"https://www.jobplanet.co.kr/api/v3/job/postings?occupation_level1=&occupation_level2=11905,11907,11904,11906,11610,11911,11609&years_of_experience=&review_score=&job_type=&city=&education_level_id=&order_by=aggressive&page={i}&page_size=8"
-    #     jobs = crawl_jobs(url)
-    #     all_jobs.extend(jobs)
-    #     li.extend(jobs)
-    #     print(li)
+# 엑셀 파일 없거나 비어있으면 초기화
+if not os.path.exists(new_file_path) or os.path.getsize(new_file_path) == 0:
+    dummy_df = pd.DataFrame(
+        columns=["companyName", "title", "recruitUrl", "annual", "text"])
+    dummy_df.to_excel(new_file_path, index=False)
+    print("📄 새 파일 생성 완료 (헤더만 있음)")
 
-    for job in SAMPLE_LIST:
-        data = get_jobplanet_recruitment_text(job)
-        if data and data.get("text") and len(data["text"]) > 0:
-            write_excel(data)
-        else:
-            print(f"❌ 공고를 수집하지 못했습니다: {job}")
+df = pd.read_excel(file_path)
+df_filtered = df.iloc[339:].reset_index(drop=True)
+json_list = df_filtered.to_dict(orient="records")
 
+for item in json_list:
+    updated = get_saramin_recruitment_text(item, item["recruitUrl"])
+    if not updated:
+        continue
 
-# if all_jobs:
-#     print("✅ 수집된 공고 수:", len(all_jobs))
-#     print("🎯 예시 공고:", json.dumps(all_jobs[:5], ensure_ascii=False, indent=2))
-# else:
-#     print("❌ 공고를 수집하지 못했습니다.")
+    updated["text"] = ", ".join(updated["text"])
+    new_row = pd.DataFrame([updated])
+
+    # 기존 엑셀 파일에서 시작 행 계산
+    book = load_workbook(new_file_path)
+    sheet = book.active
+    start_row = sheet.max_row
+
+    with pd.ExcelWriter(new_file_path, mode='a', engine='openpyxl', if_sheet_exists='overlay') as writer:
+        new_row.to_excel(writer, index=False, header=False, startrow=start_row)
+        print(f"✅ 저장 완료: {updated['companyName']}")

@@ -39,19 +39,26 @@ def get_jobplanet_recruitment_text(obj: dict) -> list:
         return
 
 
-def get_saramin_recruitment_text(url: str) -> list:
+def get_saramin_recruitment_text(obj:dict,url: str) ->dict:
     driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
     driver.implicitly_wait(3)
     driver.get(url)
+
+    time.sleep(2)
 
     html = driver.page_source
     soup = BeautifulSoup(html, 'html.parser')
     img = soup.select_one("iframe#iframe_content_0")
 
+    if not img:
+        return print("이미지 태그가 존재하지 않습니다.")
+
     src = img["src"]
 
     if src:
         driver.get(f"https://www.saramin.co.kr{src}")
+        time.sleep(2)
+
         html = driver.page_source
         soup = BeautifulSoup(html, 'html.parser')
 
@@ -60,10 +67,10 @@ def get_saramin_recruitment_text(url: str) -> list:
         flat_page_texts = [
             word.lower()
             for elem in elements
-            for word in re.findall(r'\b[\w가-힣]+\b', elem.text)
+            for word in re.findall(r'\b[a-zA-Z0-9]+\b', elem.text)
         ]
+        obj["text"] = ",".join(flat_page_texts)
+        driver.quit()
+        return obj
     else:
         pass
-
-    driver.quit()
-    return flat_page_texts
