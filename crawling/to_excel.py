@@ -1,7 +1,7 @@
 import os
 import job_list
 import pandas as pd
-import seperate_excel
+import seperate_jobplanet_excel
 front_list = job_list.FRONT_STACK_LIST
 back_list = job_list.BACK_STACK_LIST
 ios_list = job_list.IOS_STACK_LIST
@@ -13,6 +13,8 @@ cloud_list = job_list.CLOUD_STACK_LIST
 entire_list = [front_list, back_list, ios_list, cross_list,
                android_list, game_list, security_list, cloud_list]
 
+sheet_names = ['FRONT_STACK_LIST', 'BACK_STACK_LIST', 'IOS_STACK_LIST', 'CROSS_STACK_LIST', 'ANDROID_STACK_LIST', 
+               'GAME_STACK_LIST', 'SECURITY_STACK_LIST', 'CLOUD_STACK_LIST']
 all_stack_list = []
 for e in entire_list:
     all_stack_list.append([item for sublist in e.values() for item in sublist])
@@ -92,9 +94,7 @@ def write_excel(merge_list):
     
     os.makedirs(excel_dir, exist_ok=True)
     save_path = os.path.join(excel_dir, 'StackList.xlsx')
-    
-    sheet_names = ['FRONT_STACK_LIST', 'BACK_STACK_LIST', 'IOS_STACK_LIST', 'CROSS_STACK_LIST', 'ANDROID_STACK_LIST', 'GAME_STACK_LIST',
-                   'SECURITY_STACK_LIST', 'CLOUD_STACK_LIST']
+
     df_list = []
     new_df_list = []
     for merge in merge_list: 
@@ -102,7 +102,7 @@ def write_excel(merge_list):
         df_list.append(pd.DataFrame(list(merge.items()), columns=["stack", "count"]))
 
     for e, sheet_name, stack_df in zip(entire_list, sheet_names, df_list):
-        new_df = seperate_excel.seperate_category(stack_df, e)
+        new_df = seperate_jobplanet_excel.seperate_category(stack_df, e)
         new_df_list.append((sheet_name, new_df))
    
 
@@ -130,6 +130,35 @@ def write_excel2(all_keywords, path):
         df[col] = new_col
         df.to_excel(path, index=False)
 
+def total_StackList():
+    file1 = "data/excel/StackList.xlsx"  # 첫 번째 엑셀 파일
+    file2 = "data/excel/StackList_Transformed.xlsx"  # 두 번째 엑셀 파일
+
+    BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+    excel_dir = os.path.join(BASE_DIR, 'data', 'excel')
+    
+    os.makedirs(excel_dir, exist_ok=True)
+    save_path = os.path.join(excel_dir, 'Total_StackList.xlsx')
+
+    merge_sheets = {}
+    for sheet in sheet_names:
+        df1 = pd.read_excel(file1, sheet_name=sheet)
+        df2 = pd.read_excel(file2, sheet_name=sheet)
+
+        df1.set_index(['category', 'stack'], inplace=True)
+        df2.set_index(['category', 'stack'], inplace=True)
+
+        total_df = df1.add(df2, fill_value=0)
+        total_df.reset_index(inplace=True)
+        merge_sheets[sheet] = total_df
+    total_df.to_excel(save_path, index=False)
+
+    with pd.ExcelWriter(save_path) as writer:
+        for sheet_name, m_df in merge_sheets.items():
+            m_df.to_excel(writer, index=False, sheet_name=sheet_name)
+            # print("생성됨")
+    print("새로운 파일이 저장되었습니다")
+
 #main 실행 시키기 위함
 def main(path):
     df_list = read_data(path)   
@@ -140,4 +169,5 @@ def main(path):
     write_excel(merge_list)
     write_excel2(all_keywords, path)
 
-main(path = "data/excel/stack_candidate.xlsx")
+# main(path = "data/excel/stack_candidate.xlsx")
+total_StackList()
