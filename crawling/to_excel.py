@@ -2,6 +2,7 @@ import os
 import job_list
 import pandas as pd
 import seperate_jobplanet_excel
+
 front_list = job_list.FRONT_STACK_LIST
 back_list = job_list.BACK_STACK_LIST
 ios_list = job_list.IOS_STACK_LIST
@@ -87,14 +88,18 @@ def merge_counts(all_counts):
 
     return merge_list
 
-# 읽은 키워드를 카테고리 별로 분리 후 엑셀 파일에 작성(StackList.xlsx)   
-def write_excel(merge_list):
+def get_path(filename):
     BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
     excel_dir = os.path.join(BASE_DIR, 'data', 'excel')
     
     os.makedirs(excel_dir, exist_ok=True)
-    save_path = os.path.join(excel_dir, 'StackList.xlsx')
+    save_path = os.path.join(excel_dir, filename)
 
+    return save_path
+
+# 읽은 키워드를 카테고리 별로 분리 후 엑셀 파일에 작성(StackList.xlsx)   
+def write_excel(merge_list):
+    save_path = get_path('StackList.xlsx')
     df_list = []
     new_df_list = []
     for merge in merge_list: 
@@ -104,7 +109,6 @@ def write_excel(merge_list):
     for e, sheet_name, stack_df in zip(entire_list, sheet_names, df_list):
         new_df = seperate_jobplanet_excel.seperate_category(stack_df, e)
         new_df_list.append((sheet_name, new_df))
-   
 
     with pd.ExcelWriter(save_path, engine="openpyxl") as writer:
         for sheet_name, new_df in new_df_list:
@@ -125,20 +129,13 @@ def write_excel2(all_keywords, path):
 
     if len(df) != len(new_col):
         print(len(df), len(new_col))
-        print("DataFrame 행 수와 all_keywords 길이가 다릅니다!")
+        print("DataFrame 행 수와 all_keywords 길이가 다릅니다")
     else:
         df[col] = new_col
         df.to_excel(path, index=False)
 
-def total_StackList():
-    file1 = "data/excel/StackList.xlsx"  # 첫 번째 엑셀 파일
-    file2 = "data/excel/StackList_Transformed.xlsx"  # 두 번째 엑셀 파일
-
-    BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
-    excel_dir = os.path.join(BASE_DIR, 'data', 'excel')
-    
-    os.makedirs(excel_dir, exist_ok=True)
-    save_path = os.path.join(excel_dir, 'Total_StackList.xlsx')
+def total_StackList(file1, file2):
+    save_path = get_path('Total_StackList.xlsx')
 
     merge_sheets = {}
     for sheet in sheet_names:
@@ -169,5 +166,5 @@ def main(path):
     write_excel(merge_list)
     write_excel2(all_keywords, path)
 
-# main(path = "data/excel/stack_candidate.xlsx")
-total_StackList()
+main(path = "data/excel/stack_candidate.xlsx")
+total_StackList("data/excel/StackList.xlsx", "data/excel/StackList_Transformed.xlsx")
