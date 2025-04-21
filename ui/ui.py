@@ -2,9 +2,17 @@ import streamlit as st
 import pandas as pd
 import os
 import matplotlib.pyplot as plt
+import matplotlib
+
+# 한글 깨짐 방지 설정
+# Mac 사용자용 (윈도우는 'Malgun Gothic')
+matplotlib.rcParams['font.family'] = 'AppleGothic'
+matplotlib.rcParams['axes.unicode_minus'] = False
 
 st.set_page_config(layout="wide")
 st.title("채용 정보 시스템")
+
+# ========== 데이터 로드 함수 ==========
 
 
 @st.cache_data
@@ -19,12 +27,21 @@ def load_stack_data_all_sheets():
     path = os.path.dirname(os.path.abspath(__file__))
     file_path = os.path.join(path, "../data/excel/Total_StackList.xlsx")
     excel_file = pd.ExcelFile(file_path)
-    sheet_data = {}
-    for sheet in excel_file.sheet_names:
-        df = excel_file.parse(sheet)
-        df["sheet"] = sheet
-        sheet_data[sheet] = df
-    return sheet_data
+    return {sheet: excel_file.parse(sheet).assign(sheet=sheet) for sheet in excel_file.sheet_names}
+
+
+@st.cache_data
+def load_github_interview_repos():
+    path = os.path.dirname(os.path.abspath(__file__))
+    file_path = os.path.join(
+        path, "../data/excel/GithubInterviewRepos_Filtered.xlsx")
+    df = pd.read_excel(file_path)
+    df = df.rename(columns={"스택": "stack", "레포": "repo", "Stars": "stars",
+                            "최종업데이트": "updated", "설명": "desc", "URL": "url"})
+    df["updated"] = pd.to_datetime(df["updated"])
+    return df.sort_values(by="stars", ascending=False)
+
+# ========== 렌더 함수 ==========
 
 
 def render_stack(text):
@@ -37,11 +54,9 @@ def render_stack(text):
     ])
 
 
-# 버튼 카테고리 (확장됨)
+# ========== 설정 ==========
 categories = ["FRONTEND", "BACKEND", "IOS",
               "ANDROID", "CROSS", "SECURITY", "GAME", "CLOUD"]
-
-# 버튼 → 시트 이름 매핑 (확장됨)
 SHEET_NAME_MAP = {
     "FRONTEND": "FRONT_STACK_LIST",
     "BACKEND": "BACK_STACK_LIST",
@@ -53,13 +68,12 @@ SHEET_NAME_MAP = {
     "CLOUD": "CLOUD_STACK_LIST"
 }
 
-# 초기 상태
 if "limit" not in st.session_state:
     st.session_state["limit"] = 10
 if "selected" not in st.session_state:
     st.session_state["selected"] = "FRONTEND"
 
-# 버튼 렌더링
+# ========== 버튼 렌더링 ==========
 cols = st.columns(len(categories), gap="small")
 for col, name in zip(cols, categories):
     with col:
@@ -74,12 +88,11 @@ if selected:
     selected_sheet_name = SHEET_NAME_MAP.get(selected)
     all_stack_data = load_stack_data_all_sheets()
 
-    # 🔥 기술 스택 시각화 먼저 출력
+    # 🔥 기술 스택 시각화
     st.markdown(f"### {selected} 분야 기술 스택 분포 (카테고리별)")
-
     if selected_sheet_name in all_stack_data:
-        stack_df = all_stack_data[selected_sheet_name]
-        stack_df = stack_df.dropna(subset=["category", "stack", "count"])
+        stack_df = all_stack_data[selected_sheet_name].dropna(
+            subset=["category", "stack", "count"])
         stack_df["count"] = stack_df["count"].astype(int)
 
         categories_in_sheet = stack_df["category"].unique()
@@ -87,8 +100,7 @@ if selected:
                       for i in range(0, len(categories_in_sheet), 4)]
 
         for row_categories in chart_rows:
-            row_cols = st.columns(4)  # 항상 4칸 고정
-
+            row_cols = st.columns(4)
             for i in range(4):
                 if i < len(row_categories):
                     category = row_categories[i]
@@ -97,7 +109,7 @@ if selected:
                     if not cat_df.empty:
                         with row_cols[i]:
                             st.markdown(f"**{category.capitalize()}**")
-                            fig, ax = plt.subplots(figsize=(3.5, 3.5))  # 고정 크기
+                            fig, ax = plt.subplots(figsize=(3.5, 3.5))
                             ax.pie(cat_df["count"], labels=cat_df["stack"], autopct="%1.1f%%",
                                    startangle=140, textprops={'fontsize': 8})
                             ax.axis("equal")
@@ -105,7 +117,7 @@ if selected:
                             st.pyplot(fig)
                 else:
                     with row_cols[i]:
-                        st.write("")  # 빈 자리 채우기
+                        st.write("")
     else:
         st.warning(
             f"{selected}에 해당하는 시트 ({selected_sheet_name})가 Total_StackList.xlsx에 없습니다.")
@@ -117,23 +129,39 @@ if selected:
         lambda row: f'<a href="{row["recruitUrl"]}" target="_blank">{row["title"]}</a>', axis=1)
 
     st.markdown(f"### {selected} 관련 채용 공고")
-
     limited_df = df.head(st.session_state["limit"])
     for _, row in limited_df.iterrows():
-        st.markdown(
-            f"""
-            <div style="font-size:14px; line-height:1.8">
-                🔹 <b>회사명</b>: {row['companyName']}<br>
-                🔗 <b>공고 제목</b>: {row['title']}<br>
-                📆 <b>경력</b>: {row['annual']}<br>
-                🛠️ <b>기술 스택</b>: {render_stack(row['text'])}
-            </div>
-            <hr>
-            """,
-            unsafe_allow_html=True
-        )
+        st.markdown(f"""
+        <div style="font-size:14px; line-height:1.8">
+            🔹 <b>회사명</b>: {row['companyName']}<br>
+            🔗 <b>공고 제목</b>: {row['title']}<br>
+            📆 <b>경력</b>: {row['annual']}<br>
+            🛠️ <b>기술 스택</b>: {render_stack(row['text'])}
+        </div>
+        <hr>
+        """, unsafe_allow_html=True)
 
     if st.session_state["limit"] < len(df):
         if st.button("더보기"):
             st.session_state["limit"] += 10
             st.rerun()
+
+    # 🧠 GitHub 인터뷰 레포 출력 (선택된 분야에 맞게 필터링)
+    st.markdown("### 기술 스택별 GitHub 인터뷰 레포 (Top 10)")
+    github_df = load_github_interview_repos()
+    current_stack_df = github_df[github_df["stack"].str.strip(
+    ).str.upper() == selected.upper()].head(10)
+
+    rows = [current_stack_df.iloc[i:i+2]
+            for i in range(0, len(current_stack_df), 2)]
+    for row in rows:
+        cols = st.columns(2)
+        for col, (_, repo) in zip(cols, row.iterrows()):
+            with col:
+                st.markdown(f"""
+                <div style="padding:10px; border-radius:10px; background-color:#f4f4f4; margin-bottom:10px;">
+                    <b>📁 <a href="{repo['url']}" target="_blank">{repo['repo']}</a></b><br>
+                    ⭐ {repo['stars']} stars | 🕒 {repo['updated'].date()}<br>
+                    <span style="font-size:13px; color:#555;">{repo['desc'][:120]}...</span>
+                </div>
+                """, unsafe_allow_html=True)
