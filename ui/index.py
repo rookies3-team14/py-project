@@ -1,13 +1,20 @@
 import streamlit as st
 import pandas as pd
 import os
-import matplotlib.pyplot as plt
+import platform
 import matplotlib
+import matplotlib.pyplot as plt
 
-# 한글 깨짐 방지 설정
-# Mac 사용자용 (윈도우는 'Malgun Gothic')
-matplotlib.rcParams['font.family'] = 'AppleGothic'
-matplotlib.rcParams['axes.unicode_minus'] = False
+# 운영체제에 따라 한글 폰트 설정
+if platform.system() == "Darwin":  # macOS
+    matplotlib.rcParams["font.family"] = "AppleGothic"
+elif platform.system() == "Windows":
+    matplotlib.rcParams["font.family"] = "Malgun Gothic"
+else:
+    # Linux나 기타 환경에서는 나눔고딕이나 다른 대체 폰트
+    matplotlib.rcParams["font.family"] = "NanumGothic"
+
+matplotlib.rcParams["axes.unicode_minus"] = False
 
 st.set_page_config(layout="wide")
 st.title("채용 정보 시스템")

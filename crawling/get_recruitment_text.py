@@ -1,6 +1,5 @@
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
-from selenium.webdriver.chrome.options import Options
 from webdriver_manager.chrome import ChromeDriverManager
 import re
 from bs4 import BeautifulSoup
@@ -39,7 +38,7 @@ def get_jobplanet_recruitment_text(obj: dict) -> list:
         return
 
 
-def get_saramin_recruitment_text(obj:dict,url: str) ->dict:
+def get_saramin_recruitment_text(obj: dict, url: str) -> dict:
     driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
     driver.implicitly_wait(3)
     driver.get(url)

@@ -1,4 +1,5 @@
-import time, random
+import time
+import random
 from bs4 import BeautifulSoup
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
@@ -78,14 +79,3 @@ def run_scraper(base, start=1, end=3):
         all_data += parse_minimal(html)
         time.sleep(random.uniform(1, 2))
     append_recruit_notice(all_data)
-
-
-if __name__ == "__main__":
-    BASE_URL = (
-        "https://www.saramin.co.kr/zf_user/jobs/list/job-category"
-        "?cat_kewd=84%2C80%2C86%2C104%2C92%2C100"
-        "&search_optional_item=n&search_done=y&panel_count=y"
-        "&preview=y&isAjaxRequest=3&page_count=100"
-        "&sort=RL&type=job-category&is_param=1"
-    )
-    run_scraper(BASE_URL, start=1, end=2)
