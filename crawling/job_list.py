@@ -62,7 +62,6 @@ SECURITY_STACK_LIST = {
     "testing": ["owasp zap", "acunetix", "netsparker", "fortify", "checkmarx"]
 }
 
-
 CLOUD_STACK_LIST = {
     "providers": ["aws", "gcp", "azure", "digitalocean", "oracle cloud", "naver cloud", "kakao cloud"],
     "container_orchestration": ["docker", "kubernetes", "helm", "istio", "nginx", "rancher"],
@@ -138,3 +137,12 @@ CLOUD_ALL_STACK_LIST = ["aws", "gcp", "azure", "digitalocean", "oracle cloud", "
                         "aws lambda", "google cloud functions", "azure functions", "serverless framework",
                         "s3", "ec2", "rds", "cloud run", "cloudflare", "firebase", "azure blob storage",
                         "localstack", "terratest", "chaos monkey", "k6", "artillery"]
+
+entire_list = [FRONT_STACK_LIST, BACK_STACK_LIST, IOS_STACK_LIST, CROSS_STACK_LIST,
+               ANDROID_STACK_LIST, GAME_STACK_LIST, SECURITY_STACK_LIST, CLOUD_STACK_LIST]
+
+all_stack_list = [FRONT_ALL_STACK_LIST, BACK_ALL_STACK_LIST, IOS_ALL_STACK_LIST, CROSS_ALL_STACK_LIST,
+                ANDROID_ALL_STACK_LIST, GAME_ALL_STACK_LIST, SECURITY_ALL_STACK_LIST, CLOUD_ALL_STACK_LIST]
+
+sheet_names = ['FRONT_STACK_LIST', 'BACK_STACK_LIST', 'IOS_STACK_LIST', 'CROSS_STACK_LIST', 'ANDROID_STACK_LIST', 
+               'GAME_STACK_LIST', 'SECURITY_STACK_LIST', 'CLOUD_STACK_LIST']
