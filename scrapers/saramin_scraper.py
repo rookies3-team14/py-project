@@ -4,7 +4,7 @@ from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
-from saramin_to_excel import append_recruit_notice
+from utils.saramin_to_excel import append_recruit_notice
 
 
 def init_driver():

@@ -1,7 +1,7 @@
 import os
 import pandas as pd
 from openpyxl import load_workbook
-from get_recruitment_text import get_saramin_recruitment_text
+from scrapers.recruitment_text_scraper import get_saramin_recruitment_text
 
 path = os.path.dirname(os.path.abspath(__file__))
 file_path = os.path.join(path, "../data/excel/RecruitmentNotice.xlsx")

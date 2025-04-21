@@ -42,10 +42,15 @@
 
 📁 project-root/    
 │   
-├── scrapers/              # 사람인, 잡플래닛, GitHub 크롤링 모듈   
-├── data/excel/            # 수집된 데이터 저장 위치    
+├── analysis/              # 기술 스택 키워드 분석 및 전처리    
+├── config/                # 분야별 스택 키워드 및 설정 정의   
+├── data/excel/            # 수집된 데이터 저장 위치   
+├── scrapers/              # 사람인, 잡플래닛, GitHub 크롤링 모듈    
+├── scripts/               # 스택 리스트 엑셀 보고서 생성 및 통합 스크립트  
 ├── streamlit_app/         # Streamlit 기반 대시보드 UI     
 ├── utils/                 # 크롤링/엑셀 저장 유틸리티  
+├── main.py     
+├── requirements.txt                
 └── README.md
 
 
@@ -86,11 +91,11 @@ echo "GITHUB_TOKEN=your_token_here" > .env
 
 # 3. 데이터 수집 실행
 python scrapers/saramin_scraper.py
-python scrapers/job_planet_scraper.py
-python append_github_repos.py
+python scrapers/jobplanet_scraper.py
+python scrapers/github_interview_scraper.py
 
 # 4. 대시보드 실행
-streamlit run ui/ui.py
+streamlit run streamlit_app/app.py
 ```
 ## 👨‍👩‍👧‍👦 팀 소개 (루키즈 14조)
 
