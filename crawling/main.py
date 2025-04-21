@@ -23,7 +23,6 @@ for item in json_list:
     if not updated:
         continue
 
-    updated["text"] = ", ".join(updated["text"])
     new_row = pd.DataFrame([updated])
 
     # 기존 엑셀 파일에서 시작 행 계산
