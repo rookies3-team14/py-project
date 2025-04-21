@@ -95,7 +95,7 @@ python scrapers/jobplanet_scraper.py
 python scrapers/github_interview_scraper.py
 
 # 4. 대시보드 실행
-streamlit run streamlit_app/app.py
+streamlit run ui/index.py
 ```
 ## 👨‍👩‍👧‍👦 팀 소개 (루키즈 14조)
 
