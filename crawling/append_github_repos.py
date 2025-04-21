@@ -155,9 +155,10 @@ fallback_keywords = {
         "owasp interview questions",
     ],
     "Cloud/DevOps": [
-        "cloud interview questions",
-        "kubernetes interview questions",
-        "docker interview questions",
+        "클라우드 면접 질문",
+        "AWS 면접",
+        "DevOps 면접 질문",
+        "GCP 면접 질문",
     ],
 }
 
