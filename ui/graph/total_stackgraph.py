@@ -18,6 +18,7 @@ def read_excelData(stack_path):
     return sheet_names, stack_df
 
 def make_graph():
+    # "/System/Library/Fonts/Supplemental/AppleMyungjo.ttf"
     font_path = 'C:\\windows\\Fonts\\malgun.ttf'
     font_prop = fm.FontProperties(fname=font_path).get_name()
     matplotlib.rc('font', family=font_prop)

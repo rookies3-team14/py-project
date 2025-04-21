@@ -74,70 +74,67 @@ CLOUD_STACK_LIST = {
     "testing": ["localstack", "terratest", "chaos monkey", "k6", "artillery"]
 }
 
-# FRONT_STACK_LIST = ["react", "next.js", "vue", "nuxt.js", "angular", "svelte", "solid.js", "astro", "qwik",
-#                     "typescript", "javascript",
-#                     "tailwindcss", "bootstrap", "material-ui", "chakra-ui", "styled-components", "emotion", "sass", "less",
-#                     "redux", "zustand", "mobx", "recoil", "jotai", "tanstack-query", "swr",
-#                     "webpack", "vite", "rollup", "parcel", "turbopack",
-#                     "babel", "eslint", "prettier", "husky", "lint-staged",
-#                     "jest", "cypress", "playwright", "storybook", "vitest", "react-testing-library",
-#                     "graphql", "apollo client", "urql", "axios", "fetch",
-#                     "pwa", "webassembly", "three.js", "d3.js", "chart.js", "framer-motion",
-#                     "react-hook-form", "formik", "yup", "zod",
-#                     "i18next", "react-intl"]
+FRONT_ALL_STACK_LIST = ["react", "next.js", "vue", "nuxt.js", "angular", "svelte", "solid.js", "astro", "qwik",
+                        "typescript", "javascript",
+                        "tailwindcss", "bootstrap", "material-ui", "chakra-ui", "styled-components", "emotion", "sass", "less",
+                        "redux", "zustand", "mobx", "recoil", "jotai", "tanstack-query", "swr",
+                        "webpack", "vite", "rollup", "parcel", "turbopack",
+                        "babel", "eslint", "prettier", "husky", "lint-staged",
+                        "jest", "cypress", "playwright", "storybook", "vitest", "react-testing-library",
+                        "graphql", "apollo client", "urql", "axios", "fetch",
+                        "pwa", "webassembly", "three.js", "d3.js", "chart.js", "framer-motion",
+                        "react-hook-form", "formik", "yup", "zod",
+                        "i18next", "react-intl"]
 
-# BACK_STACK_LIST = ["node.js", "express", "nest.js", "koa", "fastify",
-#                    "spring", "spring boot", "java", "kotlin", "quarkus", "micronaut",
-#                    "django", "flask", "fastapi", "python", "tornado",
-#                    "ruby on rails", "laravel", "php", "asp.net", "c#", "go", "gin", "echo",
-#                    "graphql", "apollo server", "rest api", "swagger", "openapi",
-#                    "mysql", "postgresql", "mariadb",
-#                    "mongodb", "redis", "cassandra", "dynamodb", "couchbase",
-#                    "elasticsearch", "kafka", "rabbitmq", "nats", "grpc", "protobuf",
-#                    "docker", "kubernetes", "nginx", "apache",
-#                    "prisma", "typeorm", "sequelize", "sqlalchemy", "mongoose", "hibernate",
-#                    "jest", "mocha", "junit", "pytest", "mockito", "supertest"]
+BACK_ALL_STACK_LIST = ["node.js", "express", "nest.js", "koa", "fastify",
+                       "spring", "spring boot", "java", "kotlin", "quarkus", "micronaut",
+                       "django", "flask", "fastapi", "python", "tornado",
+                       "ruby on rails", "laravel", "php", "asp.net", "c#", "go", "gin", "echo",
+                       "graphql", "apollo server", "rest api", "swagger", "openapi",
+                       "mysql", "postgresql", "mariadb",
+                       "mongodb", "redis", "cassandra", "dynamodb", "couchbase",
+                       "elasticsearch", "kafka", "rabbitmq", "nats", "grpc", "protobuf",
+                       "docker", "kubernetes", "nginx", "apache",
+                       "prisma", "typeorm", "sequelize", "sqlalchemy", "mongoose", "hibernate",
+                       "jest", "mocha", "junit", "pytest", "mockito", "supertest"]
 
-# IOS_STACK_LIST = ["swift", "objective-c",
-#                   "swiftui", "uikit",
-#                   "coredata", "realm",
-#                   "alamofire", "moya",
-#                   "xctest", "quick", "nimble", "metrickit"]
-
-
-# CROSS_STACK_LIST = ["react native", "flutter", "xamarin",
-#                     "detox", "appium", "fastlane", "firebase test lab"]
+IOS_ALL_STACK_LIST = ["swift", "objective-c",
+                      "swiftui", "uikit",
+                      "coredata", "realm",
+                      "alamofire", "moya",
+                      "xctest", "quick", "nimble", "metrickit"]
 
 
-# ANDROID_STACK_LIST = ["kotlin", "java",
-#                       "android sdk", "android jetpack", "jetpack compose",
-#                       "room", "realm",
-#                       "retrofit", "okhttp",
-#                       "espresso", "junit", "mockk", "robolectric"]
-
-# GAME_STACK_LIST = ["unity", "unreal engine", "godot", "cryengine", "cocos2d-x", "gamemaker studio",
-#                    "blender", "maya", "3ds max", "openGL", "directX", "vulkan",
-#                    "fmod", "wwise",
-#                    "hlsl", "glsl",
-#                    "steamworks", "xbox live sdk", "psn sdk",
-#                    "unity test framework", "unreal automation", "gamelift"]
-
-# SECURITY_STACK_LIST = ["kali linux", "wireshark", "nmap", "metasploit", "burp suite", "nessus", "openvas", "snort", "suricata",
-#                        "osquery", "splunk", "elk stack", "nagios", "zabbix", "prometheus",
-#                        "hashcat", "john the ripper", "sqlmap", "aircrack-ng", "metasploit framework",
-#                        "cloudflare", "okta", "auth0", "mfa", "sso", "saml", "oauth2", "keycloak",
-#                        "veracrypt", "keepass", "gpg", "tor", "vpn", "vault",
-#                        "aqua", "twistlock", "snyk",
-#                        "owasp zap", "acunetix", "netsparker", "fortify", "checkmarx"]
-
-# CLOUD_STACK_LIST = ["aws", "gcp", "azure", "digitalocean", "oracle cloud", "naver cloud", "kakao cloud",
-#                     "docker", "kubernetes", "helm", "istio", "nginx", "rancher",
-#                     "terraform", "cloudformation", "pulumi", "ansible", "chef", "puppet", "cdk",
-#                     "jenkins", "github actions", "gitlab ci", "circleci", "argo cd", "tekton", "spinnaker",
-#                     "prometheus", "grafana", "datadog", "new relic", "sentry", "loki", "elastic stack",
-#                     "aws lambda", "google cloud functions", "azure functions", "serverless framework",
-#                     "s3", "ec2", "rds", "cloud run", "cloudflare", "firebase", "azure blob storage",
-#                     "localstack", "terratest", "chaos monkey", "k6", "artillery"]
+CROSS_ALL_STACK_LIST = ["react native", "flutter", "xamarin",
+                        "detox", "appium", "fastlane", "firebase test lab"]
 
 
+ANDROID_ALL_STACK_LIST = ["kotlin", "java",
+                          "android sdk", "android jetpack", "jetpack compose",
+                          "room", "realm",
+                          "retrofit", "okhttp",
+                          "espresso", "junit", "mockk", "robolectric"]
 
+GAME_ALL_STACK_LIST = ["unity", "unreal engine", "godot", "cryengine", "cocos2d-x", "gamemaker studio",
+                       "blender", "maya", "3ds max", "openGL", "directX", "vulkan",
+                       "fmod", "wwise",
+                       "hlsl", "glsl",
+                       "steamworks", "xbox live sdk", "psn sdk",
+                       "unity test framework", "unreal automation", "gamelift"]
+
+SECURITY_ALL_STACK_LIST = ["kali linux", "wireshark", "nmap", "metasploit", "burp suite", "nessus", "openvas", "snort", "suricata",
+                           "osquery", "splunk", "elk stack", "nagios", "zabbix", "prometheus",
+                           "hashcat", "john the ripper", "sqlmap", "aircrack-ng", "metasploit framework",
+                           "cloudflare", "okta", "auth0", "mfa", "sso", "saml", "oauth2", "keycloak",
+                           "veracrypt", "keepass", "gpg", "tor", "vpn", "vault",
+                           "aqua", "twistlock", "snyk",
+                           "owasp zap", "acunetix", "netsparker", "fortify", "checkmarx"]
+
+CLOUD_ALL_STACK_LIST = ["aws", "gcp", "azure", "digitalocean", "oracle cloud", "naver cloud", "kakao cloud",
+                        "docker", "kubernetes", "helm", "istio", "nginx", "rancher",
+                        "terraform", "cloudformation", "pulumi", "ansible", "chef", "puppet", "cdk",
+                        "jenkins", "github actions", "gitlab ci", "circleci", "argo cd", "tekton", "spinnaker",
+                        "prometheus", "grafana", "datadog", "new relic", "sentry", "loki", "elastic stack",
+                        "aws lambda", "google cloud functions", "azure functions", "serverless framework",
+                        "s3", "ec2", "rds", "cloud run", "cloudflare", "firebase", "azure blob storage",
+                        "localstack", "terratest", "chaos monkey", "k6", "artillery"]
